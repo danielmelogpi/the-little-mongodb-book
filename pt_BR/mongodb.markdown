@@ -359,33 +359,29 @@ O MongoDB suporta algo chamado `DBRef` que é uma convenção de vários drivers
 #### Desnormalização ####
 Uma outra alternativa ao uso dos joins é desnormalizar seus dados. Historicamente, desnormalização se reservou a código sensível à performance, ou quando os dados deveriam ser mantidos conforme um ponto no tempo (como um log para auditoria). Entretanto, com a popularidade do NoSQL crescendo constantemente, sendo várias dessas tecnologias sem joins, desnormalização como parte da modelagem comum está se tornando algo comum. Isso não significa que você agora deve duplicar cada pedaço dos seus dados em cada documento. Entretanto, em vez de deixar o medo da duplicação dos dados dirigir suas decisões quanto ao design, considere modelar seus dados baseado em que informação pertence a que documento.
 
+Por exemplo, digamos que você esteja escrevendo uma aplicação de um fórum. O modo tradicional de associar um `user` com um `post` é usando uma coluna chamada `userid` na tabela `posts`. Com esse formato você não pode modelar `posts` sem recuperar (join) `users`. Uma outra possibilidade é simplesmente guardar o `name` assim como o `userid` para cada `post` Você poderia até fazer isso com um documento incorporado, como `user: {id: ObjectId('Something'), name: 'Leto'}`. Sim, sim, se você deixar os usuários mudarem seus nomes, você terá de atualizar cada documento (o que é uma query extra).
 
 
+Ajustar-se a esse tipo de estratégia não é algo que vem fácil para alguns. Em muitos casos isso nem faria sentido. Apesar disso, não sinta medo de experimentar algo assim. Não só é viável em algumas circunstâncias, mas também pode ser a coisa certa a se fazer.
 
+#### Qual você deveria escolher? ####
+Arrays de ids são sempre uma estratégia útil quando lidamos com relacionamentos de um-para-muitos ou muitos-para-muitos. Provavelmente é seguro dizer que `DBRef's` não são usados com muita frequência mas, ainda sim, você com certeza pode brincar e fazer testes com eles.
 
-
-For example, say you are writing a forum application. The traditional way to associate a specific `user` with a `post` is via a `userid` column within `posts`. With such a model, you can't display `posts` without retrieving (joining to) `users`. A possible alternative is simply to store the `name` as well as the `userid` with each `post`. You could even do so with an embedded document, like `user: {id: ObjectId('Something'), name: 'Leto'}`. Yes, if you let users change their name, you'll have to update each document (which is 1 extra query). 
-
-Adjusting to this kind of approach won't come easy to some. In a lot of cases it won't even make sense to do this. Don't be afraid to experiment with this approach though. It's not only suitable in some circumstances, but it can also be the right way to do it.
-
-#### Which Should You Choose? ####
-Arrays of ids are always a useful strategy when dealing with one-to-many or many-to-many scenarios. It's probably safe to say that `DBRef` aren't use very often, though you can certainly experiment and play with them. That generally leaves new developers unsure about using embedded documents versus doing manual referencing.
-
-First, you should know that an individual document is currently limited to 4 megabytes in size. Knowing that documents have a size limit, though quite generous, gives you some idea of how they are intended to be used. At this point, it seems like most developers lean heavily on manual references for most of their relationships. Embedded documents are frequently leveraged, but mostly for small pieces of data which we want to always pull with the parent document. A real world example I've used is to store an `accounts` document with each user, something like:
+Primeiramente, você deve saber que um documento individual é limitado a 4 megabytes de tamanho. Saber que documentos tem um tamanho limitado, apesar de bastante generoso, te dá alguma ideia de como eles devem ser usados. Aparentemente muitos desenvolvedores preferem usar referências manuais para a maioria dos relacionamentos. Documentos incorporados são frequentemente interessantes, mas para pequenos pedaços de dados que sempre queremos recuperar com seu documento-pai. Um exemplo de mundo real que eu costumo usar é o de guardar o documento `accounts` (contas) com cada usuário, mais ou menos assim:
 
 	db.users.insert({name: 'leto', email: 'leto@dune.gov', account: {allowed_gholas: 5, spice_ration: 10}})
 
-That doesn't mean you should underestimate the power of embedded documents or write them off as something of minor utility. Having your data model map directly to your objects makes things a lot simpler and often does remove the need to join. This is especially true when you consider that MongoDB lets you query and index fields of an embedded document. 
+Isso não quer dizer que você deva subestimar o poder dos documentos incorporados ou escrevê-los à parte, como algo de utilidade menor. Ter o seu modelo mapeando seus dados em seus objetos torna as coisas mais simples e constantemente reduz a necessidade de um join. Isso é especialmente verdade quando se considera que o MongoDB te deixa consultar e indexar campos de um documento incorporado.
 
-### Few or Many Collections ###
-Given that collections don't enforce any schema, it's entirely possible to build a system using a single collection with a mismatch of documents.  From what I've seen, most MongoDB systems are laid out similarly to what you'd find in a relational system. In other words, if it would be a table in a relational database, it'll likely be a collection in MongoDB (many-to-many join tables being an important exception).
+### Poucas ou muitas coleções ###
+Uma vez que coleções não forçam nenhum schema, é perfeitamente possivel construir um sistema usando uma única coleção com uma diversidade de documentos. O que eu costumo encontrar por ai é que a maioria dos sistemas usando MongoDB se organizam mais ou menos como o que você vai encontrar em um sistema relacional. Em outras palavras, se fosse uma tabela na base de dados relacional, provavelmente seria uma coleção no MongoDB (tabelas intermediárias dos relacionamentos muitos-para-muitos seriam uma exceção notável a essa ideia).
 
-The conversation gets even more interesting when you consider embedded documents. The example that frequently comes up is a blog. Should you have a `posts` collection and a `comments` collection, or should each `post` have an array of `comments` embedded within it. Setting aside the 4MB limit for the time being (all of Hamlet is less than 200KB, just how popular is your blog?), most developers still prefer to separate things out. It's simply cleaner and more explicit.
+A conversa fica ainda mais interessante quando se consideram os documentos incorporados. Um exemplo frequentemente citado é o de um blog. Devemos ter uma coleção `posts` e uma `comments` ou cada `post` deve ter um array de `comments` dentro dos seus registros? Se desconsiderarmos o limite de 4MB por enquanto (Hamlet tem, ao todo, menos de 200KB. Seu blog é tão popular assim?), muitos desenvolvedores ainda preferem separar as coisas. É simplesmente mais limpo e mais explícito.
 
-There's no hard rule (well, aside from 4MB). Play with different approaches and you'll get a sense of what does and does not feel right. 
+Não existe nenhuma regra fixa (fora o limite de 4MB). Experimento com formatos diferentes e você vai adquirir um senso do que parece ou não estar correto.
 
-### In This Chapter ###
-Our goal in this chapter was to provide some helpful guidelines for modeling your data in MongoDB. A starting point if you will. Modeling in a document-oriented system is different, but not too different than a relational world. You have a bit more flexibility and one constraint, but for a new system, things tend to fit quite nicely. The only way you can go wrong is by not trying.
+### Nesse capítulo ###
+Nosso objetivo nesse capítulo foi de tentar mostrar algumas estratégias úteis para modelar seus dados no MongoDB. Um ponto de partida, se assim preferir. Modelar uma base de dados orientada a documentos é diferente, mas não tão diferente do que existe no mundo relacional. Você tem um pouco mais de flexibilidade e uma limitação, mas para um sistema novo, as coisas tendem a se encaixar até bem. A única coisa em que você pode errar é não tentando.
 
 \clearpage
 
