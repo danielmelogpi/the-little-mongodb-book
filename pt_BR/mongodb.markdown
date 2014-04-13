@@ -433,24 +433,29 @@ O segundo, para quando operações atômicas não são o suficiente, é voltar a
 O suporte do MongoDB à documentos incorporados e a falta de schema fazem desse processo algo um pouco menos doloroso, mas ainda não é um processo interessante, especialmente quando você está começando com ele.
 
 ### Processamento de dados ###
-MongoDB relies on MapReduce for most data processing jobs. It has some [basic aggregation](http://www.mongodb.org/display/DOCS/Aggregation) capabilities, but for anything serious, you'll want to use MapReduce. In the next chapter we'll look at MapReduce in detail. For now you can think of it as a very powerful and different way to `group by` (which is an understatement). One of MapReduce's strengths is that it can be parallelized for working with large sets of data. However, MongoDB's implementation relies on JavaScript which is single-threaded. The point? For processing of large data, you'll likely need to rely on something else, such as Hadoop. Thankfully, since the two systems really do complement each other, there's a [MongoDB adapter for Hadoop](https://github.com/mongodb/mongo-hadoop).
+O MongoDB faz uso do MapReduce para a maioria das tarefas de processamento de dados. Ele tem algumas capacidades de [agregação simples](http://www.mongodb.org/display/DOCS/Aggregation), mas para alguma coisa séria, você vai querer usar o MapReduce. No próximo capítulo, nos daremos uma olhada no MapReduce com mais detalhes. Por agora, você pode pensar nele em uma forma diferente e muito poderosa de `group by` (falando de maneira atenuada). Uma das vantagens do MapReduce é que ele pode ser paralelizado para trabalhar com grandes conjuntos de dados. Entretanto, a implementação do MongoDB faz uso de Javascript, que é single-thread. Qual o ponto disso? Para processar conjuntos grandes de dados você provavelmente precisará de algo mais, como o Hadoop. Por sorte, uma vez que os dois sistemas complementam bem um ao outro, existe um [Adaptador do MongoDB para Hadoop](https://github.com/mongodb/mongo-hadoop).
 
-Of course, parallelizing data processing isn't something relational databases excel at either. There are plans for future versions of MongoDB to be better at handling very large sets of data.
+Claro, paralelizar dados não é algo que as bases de dados relacionais também não é algo que as bases de dados relacionais não façam também. Existem planos para futuras versões do MongoDB que façam melhor as tarefas relacionadas com grandes conjuntos de dados.
 
-### Geospatial ###
-A particularly powerful feature of MongoDB is its support for geospatial indexes. This allows you to store x and y coordinates within documents and then find documents that are `$near` a set of coordinates or `$within` a box or circle. This is a feature best explained via some visual aids, so I invite you to try the [5 minute geospatial interactive tutorial](http://mongly.com/geo/index), if you want to learn more.
+### Geospacial ###
+Uma caracterísitica poderosa do MongoDB é o seu suporte para índices geoespaciais. Isso permite que você guarde coordenadas x e y nos documentos e então encontre os documentos que estejam perto (`$near`) de outra coordenadas ou dentro (`$within`) de um cículo ou um quadrilátero. Isso é um recurso melhor entendido com algum auxílio visual, então eu te convido a tentar o [tutorial geoespacial interativo de 5 minutos](http://mongly.com/geo/index), se você quer aprender mais.
 
-### Tools and Maturity ###
-You probably already know the answer to this, but MongoDB is obviously younger than most relational database systems. This is absolutely something you should consider. How much a factor it plays depends on what you are doing and how you are doing it. Nevertheless, an honest assessment simply can't ignore the fact that MongoDB is younger and the available tooling around isn't great (although the tooling around a lot of very mature relational databases is pretty horrible too!). As an example, the lack of support for base-10 floating point numbers will obviously be a concern (though not necessarily a show-stopper) for systems dealing with money.
 
-On the positive side, drivers exist for a great many languages, the protocol is modern and simple, and development is happening at blinding speeds. MongoDB is in production at enough companies that concerns about maturity, while valid, are quickly becoming a thing of the past.
+### Ferramentas e maturidade ###
+Você provavelmente já sabe a resposta para isso, mas o MongoDB é obviamente mais jovem que a maioria das bases de dados relacionais. Isso é algo que com certeza você deve considerar. Quanto isso afeta depende do que você está fazendo e como está fazendo. Seja como for, uma avaliação honesta simplesmente não pode ignorar o fato de que o MongoDB é jovem e que a gama de ferramentas disponíveis não é excelente (apesar de que as ferramentas para as bases de dados relacionais ser bem ruinzinha também). Como exemplo, a falta de suporte para ponto flutuante na base 10 certamente será algo a considerar (apesar de não ser necessariamente um impedimento) para sistemas lidando com dinheiro.
 
-### In This Chapter ###
-The message from this chapter is that MongoDB, in most cases, can replace a relational database. It's much simpler and straightforward; it's faster and generally imposes fewer restrictions on application developers. The lack of transactions can be a legitimate and serious concern. However, when people ask *where does MongoDB sit with respect to the new data storage landscape?* the answer is simple: **right in the middle**.
+Como ponto positivo, drivers existem para uma grande quantidade de linguagens, o protocolo é moderno e simples e o desenvolvimento acontece a velocidades altas. MongoDB está em produção em companhias suficientes que se preocupam com maturidade e a preocupação com isso está se tornando uma coisa do passado.
+
+
+### Nesse capítulo ###
+A mensagem desse capítulo é que o MongoDB, na maioria dos casos, pode substituir uma base de dados relacional. É muito mais simples e direto; é rápido e geralmente impõe poucas restrições aos desenvolvedores da aplicação A falta das transações pode ser um problema sério e legítimo. Entretanto, quando as pessoas perguntam *onde fica o MongoDB no que diz respeito ao novo cenário de armazenamento de dados?* a resposta é simplesmente **exatamente no meio**.
+
 
 \clearpage
 
-## Chapter 6 - MapReduce ##
+## Capítulo 6 - MapReduce ##
+
+
 MapReduce is an approach to data processing which has two significant benefits over more traditional solutions. The first, and main, reason it was development is performance. In theory, MapReduce can be parallelized, allowing very large sets of data to be processed across many cores/CPUs/machines. As we just mentioned, this isn't something MongoDB is currently able to take advantage of. The second benefit of MapReduce is that you get to write real code to do your processing. Compared to what you'd be able to do with SQL, MapReduce code is infinitely richer and lets you push the envelope further before you need to use a more specialized solution.
 
 MapReduce is a pattern that has grown in popularity, and you can make use of it almost anywhere; C#, Ruby, Java, Python and so on all have implementations. I want to warn you that at first this'll seem very different and complicated. Don't get frustrated, take your time and play with it yourself. This is worth understanding whether you are using MongoDB or not.
