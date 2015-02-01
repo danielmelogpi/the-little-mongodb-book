@@ -23,7 +23,7 @@ Karl Seguin é um desenvolvedor com experiência em vários campos e tecnologias
 Seu blog pode ser encontrado em <http://openmymind.net>, e seus tweets via [@karlseguin](http://twitter.com/karlseguin)
 
 ### Tradução para Português Brasileiro ###
-A tradução foi feita inicialmente por [Daniel Melo](https://github.com/danielmelogpi) depois de ter se beneficiado pelo conhecimento contido na versão em inglês. O tradutor pede contribuições caso erros de gramática sejam encontrados no decorrer dessa versão. Vamos ajudar a comunidade brasileira que tem voltado os olhos para essa ferramenta tão interessante.
+A tradução foi feita inicialmente por [Daniel Melo](https://github.com/danielmelogpi) depois de ter se beneficiado pelo conhecimento contido na versão em inglês. O autor dá boas vindas às contribuições de membros da comunidade brasileira de software livre que queiram contribuir com melhorias nestes documento.
 
 ### Agradecimentos ###
 Agradecimento especial a [Perry Neal](http://twitter.com/perryneal) por emprestar-me os olhos, mente e paixão. Você me proveu uma ajuda incomensurável. Obrigado.
@@ -456,9 +456,9 @@ A mensagem desse capítulo é que o MongoDB, na maioria dos casos, pode substitu
 ## Capítulo 6 - MapReduce ##
 
 
-MapReduce is an approach to data processing which has two significant benefits over more traditional solutions. The first, and main, reason it was development is performance. In theory, MapReduce can be parallelized, allowing very large sets of data to be processed across many cores/CPUs/machines. As we just mentioned, this isn't something MongoDB is currently able to take advantage of. The second benefit of MapReduce is that you get to write real code to do your processing. Compared to what you'd be able to do with SQL, MapReduce code is infinitely richer and lets you push the envelope further before you need to use a more specialized solution.
+MapReduce é uma abordagem ao processamento de dados que tem dois benefícios significativos que o destacam em relação às soluções mais tradicionais. A primeira e principal razão pela qual foi desenvolvido é a performance. Em teoria, o MapReduce pode ser paralelizado, permitindo que grandes quantidades de dados sejam processados por vários núcleos/CPUs/máquinas. Como mencionado, isso não é algo de que o MongoDB seja capaz de se aproveitar hoje em dia. O segundo benefício do MapReduce é que você vai escrever código de verdade para realizar seu processamento. Comparado com o que você é capaz de fazer com SQL, código para MapReduce é infinitamente mais rico e te deixa levar o desenvolvimento adiante antes de você precisar adotar uma solução mais especializada.
 
-MapReduce is a pattern that has grown in popularity, and you can make use of it almost anywhere; C#, Ruby, Java, Python and so on all have implementations. I want to warn you that at first this'll seem very different and complicated. Don't get frustrated, take your time and play with it yourself. This is worth understanding whether you are using MongoDB or not.
+MapReduce é um padrão que tem crescido em popularidade e você pode fazer uso dele com quase tudo; C#, Ruby, Java, Python e outros vários tem implementações. Preciso te alertar que à primeira vista vai paracer muito diferente e complicado. Não se frustre, mas leve seu próprio tempo e experimente-o você mesmo. É algo válido para aprender seja usando MongoDB ou não.
 
 ### A Mix of Theory and Practice ###
 MapReduce is a two-step process. First you map and then you reduce. The mapping step transforms the inputted documents and emits a key=>value pair (the key and/or value can be complex). The reduce gets a key and the array of values emitted for that key and produces the final result. We'll look at each step, and the output of each step.
