@@ -36,7 +36,7 @@ Os fontesd da última versão deste livro estão disponíveis em:
 \clearpage
 
 ## Introdução ##
- > Não é minha culta dos capítulos serem tão curtos, MongoDB é simplesmente fácil de aprender.
+ > Não é minha culpa dos capítulos serem tão curtos, MongoDB é simplesmente fácil de aprender.
 
 É comumente dito que a tecnologia se move a velocidades absurdas. É fato que existe uma crescente lista de novas tecnologias e técnicas sendo lançadas. Entretanto, eu tenho tido há muito a opinião de que tecnologias fundamentais usadas por programadores se movem a um paço mais lento. Alguém poderia passar anos aprendendo pouco e ainda ser relevante. Mas o que acaba sendo supreendente, na verdade, é a velocidade em que tecnologias consolidadas são substituídas. Meio que de repente, tecnologias estabelecidas à muito tempo podem se encontrar ameaçadas pelas mudanças no foco dos desenvolvedores.
 
