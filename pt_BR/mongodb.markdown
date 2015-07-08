@@ -36,7 +36,7 @@ Os fontesd da última versão deste livro estão disponíveis em:
 \clearpage
 
 ## Introdução ##
- > Não é minha culta dos capítulos serem tão curtos, MongoDB é simplesmente fácil de aprender.
+ > Não é minha culpa dos capítulos serem tão curtos, MongoDB é simplesmente fácil de aprender.
 
 É comumente dito que a tecnologia se move a velocidades absurdas. É fato que existe uma crescente lista de novas tecnologias e técnicas sendo lançadas. Entretanto, eu tenho tido há muito a opinião de que tecnologias fundamentais usadas por programadores se movem a um paço mais lento. Alguém poderia passar anos aprendendo pouco e ainda ser relevante. Mas o que acaba sendo supreendente, na verdade, é a velocidade em que tecnologias consolidadas são substituídas. Meio que de repente, tecnologias estabelecidas à muito tempo podem se encontrar ameaçadas pelas mudanças no foco dos desenvolvedores.
 
@@ -139,7 +139,7 @@ Use novamente o `find` para listar os documentos. Assim que virmos um pouco mais
 
 Complemento os seis conceitos explorados, existe um aspecto prático do MongoDB sobre o qual você deve ter um bom entendimento antes de prosseguirmos para tópicos mais avançados: seletores de query/consulta. Um seletor do MongoDB é como a cláusula `where` de um comando SQL. Sendo assim, você pode usá-lo quando quer encontrar, contar, atualizar e remover documentos de uma coleção. Um seletor é um objeto JSON, sendo o mais simples possível o bom e velho `{}` que bate com todos os elementos (`null` também funciona assim).  Se nós quisessemos encontrar todas as unicórnios fêmeas nós poderíamos usar `{gender: 'f'}`.
 
-Antes de mergular muito fundo nos seletores, vamos adicionar alguns dados para podermos brincar. Primeiramente remova o que nós já adicionamos à coleção `unicorns` usando `db.unicorns.remove()` (uma vez que não estamos fornecendo um seletor, isso removerá todos os documentos). Agora, execute os seguintes inserts para termos alguns dados à mão (sugiro que você copie e cole isso, com algum cuidado com as aspas): 
+Antes de mergulhar muito fundo nos seletores, vamos adicionar alguns dados para podermos brincar. Primeiramente remova o que nós já adicionamos à coleção `unicorns` usando `db.unicorns.remove()` (uma vez que não estamos fornecendo um seletor, isso removerá todos os documentos). Agora, execute os seguintes inserts para termos alguns dados à mão (sugiro que você copie e cole isso, com algum cuidado com as aspas): 
 
 	db.unicorns.insert({name: 'Horny', dob: new Date(1992,2,13,7,47), loves: ['carrot','papaya'], weight: 600, gender: 'm', vampires: 63});
 	db.unicorns.insert({name: 'Aurora', dob: new Date(1991, 0, 24, 13, 0), loves: ['carrot', 'grape'], weight: 450, gender: 'f', vampires: 43});
